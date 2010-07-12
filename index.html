@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>CSS3 Spotlight</title>
+		
+		<link rel="stylesheet" type="text/css" href="../ext-3.2.1/resources/css/ext-all.css" />
+		
+		<script type="text/javascript" src="../ext-3.2.1/adapter/ext/ext-base-debug.js"></script>
+		<script type="text/javascript" src="../ext-3.2.1/ext-all-debug.js"></script>
+		
+		<script type="text/javascript" src="Ext.Element.CSS3Spotlight.js"></script>
+		
+		<script type="text/javascript">
+			var win;
+			Ext.onReady(function() {
+				win = new Ext.Window({
+					title  : "Mask Test",
+					width  : 400,
+					height : 200,
+					tbar   : [{
+						text    : "Spotlight",
+						scale   : "large",
+						handler : function() {
+							win.el.CSS3Spotlight({
+								duration: 1000
+							});
+						}
+					},"->",{
+						text    : "Spotlight (No Anim)",
+						scale   : "large",
+						handler : function() {
+							win.el.CSS3Spotlight({
+								skipAnim: true
+							});
+						}
+					}],
+					bbar   : [{
+						text    : "Hide Spotlight",
+						scale   : "large",
+						handler : function() {
+							win.el.CSS3SpotlightHide({
+								duration: 1000
+							});
+						}
+					},"->",{
+						text    : "Hide Spotlight (No Anim)",
+						scale   : "large",
+						handler : function() {
+							win.el.CSS3SpotlightHide({
+								skipAnim: true
+							});
+						}
+					}]
+				}).show();
+			});
+		</script>
+    </head>
+    <body>
+    </body>
+</html>
