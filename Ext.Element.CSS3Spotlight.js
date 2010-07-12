@@ -38,6 +38,7 @@ Ext.Element.addMethods({
 		this.spotlight.active = false;
 	},
 	CSS3SpotlightMarkHideDone : function() {
+		Ext.removeNode(this.spotlight.dom);
 		this.spotlight.active = false;
 		delete this.spotlight;
 		return;
