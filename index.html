@@ -6,25 +6,57 @@
         <title>CSS3 Spotlight</title>
 		
 		<link rel="stylesheet" type="text/css" href="../ext-3.2.1/resources/css/ext-all.css" />
+		<link rel="stylesheet" type="text/css" href="colorpicker.css" />
 		
 		<script type="text/javascript" src="../ext-3.2.1/adapter/ext/ext-base-debug.js"></script>
 		<script type="text/javascript" src="../ext-3.2.1/ext-all-debug.js"></script>
 		
 		<script type="text/javascript" src="Ext.Element.CSS3Spotlight.js"></script>
+		<script type="text/javascript" src="colorpicker.js"></script>
+		<script type="text/javascript" src="colorpickerfield.js"></script>
 		
 		<script type="text/javascript">
+			var check = function(r) {
+			    return r.test(navigator.userAgent.toLowerCase());
+			};
+			
+			Ext.isGecko4 = Ext.isGecko && check(/rv:2\.0/);
 			var win;
+			
 			Ext.onReady(function() {
 				win = new Ext.Window({
-					title  : "Mask Test",
-					width  : 400,
-					height : 200,
-					tbar   : [{
+					title      : "Spotlight Test",
+					width      : 400,
+					height     : 300,
+					autoScroll : true,
+					layout     : "form",
+					labelWidth : 50,
+					items      : [{
+						xtype      : "simplecolorpickerfield",
+						fieldLabel : "Color",
+						name       : "color",
+						value      : "#000000",
+						ref        : "backgroundColor"
+					},{
+						xtype      : "sliderfield",
+						ref        : "opacity",
+						anchor     : "100%",
+						fieldLabel : "Opacity",
+						value      : 50,
+						minValue   : 0,
+						maxValue   : 100,
+						tipText    : function(thumb){
+							return String(thumb.value) + '%';
+						}
+					}],
+					tbar       : [{
 						text    : "Spotlight",
 						scale   : "large",
 						handler : function() {
 							win.el.CSS3Spotlight({
-								duration: 1000
+								duration   : 1000,
+								background : win.backgroundColor.getValue(),
+								opacity    : win.opacity.getValue()/100
 							});
 						}
 					},"->",{
@@ -36,7 +68,7 @@
 							});
 						}
 					}],
-					bbar   : [{
+					bbar       : [{
 						text    : "Hide Spotlight",
 						scale   : "large",
 						handler : function() {

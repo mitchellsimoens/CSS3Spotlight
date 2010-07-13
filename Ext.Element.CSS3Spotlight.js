@@ -1,9 +1,11 @@
 Ext.Element.addMethods({
 	CSS3Spotlight : function(o) {
 		o = Ext.applyIf(o || {}, {
-			skipAnim : false,
-	        duration : 500,
-	        easing   : "ease-in"
+			skipAnim   : false,
+	        duration   : 500,
+	        easing     : "ease-in",
+	        background : "#000000",
+	        opacity    : 0.5
 	    });
 		if (this.spotlight) {
 			if (this.spotlight.active === true) {
@@ -17,7 +19,7 @@ Ext.Element.addMethods({
 		this.spotlight.active = true;
 		
 		this.spotlight.setStyle({
-			"background-color" : "#000",
+			"background-color" : o.background,
 			"position" : "absolute",
 			"top" : "0px",
 			"left" : "0px",
@@ -27,7 +29,7 @@ Ext.Element.addMethods({
 		});
 		
 		if (o.skipAnim === true) {
-			this.spotlight.setStyle("opacity", "0.5");
+			this.spotlight.setStyle("opacity", o.opacity);
 			this.CSS3SpotlightMarkShowDone();
 		} else {
 			this.spotlight.setStyle("opacity", "0");
