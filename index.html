@@ -11,16 +11,12 @@
 		<script type="text/javascript" src="../ext-3.2.1/adapter/ext/ext-base-debug.js"></script>
 		<script type="text/javascript" src="../ext-3.2.1/ext-all-debug.js"></script>
 		
+		<script type="text/javascript" src="Ext.check.Gecko4.js"></script>
 		<script type="text/javascript" src="Ext.Element.CSS3Spotlight.js"></script>
 		<script type="text/javascript" src="colorpicker.js"></script>
 		<script type="text/javascript" src="colorpickerfield.js"></script>
 		
 		<script type="text/javascript">
-			var check = function(r) {
-			    return r.test(navigator.userAgent.toLowerCase());
-			};
-			
-			Ext.isGecko4 = Ext.isGecko && check(/rv:2\.0/);
 			var win;
 			
 			Ext.onReady(function() {

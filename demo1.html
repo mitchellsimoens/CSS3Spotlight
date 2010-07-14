@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>CSS3 Spotlight Demo 1</title>
+		
+		<link rel="stylesheet" type="text/css" href="../ext-3.2.1/resources/css/ext-all.css" />
+		<link rel="stylesheet" type="text/css" href="colorpicker.css" />
+		
+		<script type="text/javascript" src="../ext-3.2.1/adapter/ext/ext-base-debug.js"></script>
+		<script type="text/javascript" src="../ext-3.2.1/ext-all-debug.js"></script>
+		
+		<script type="text/javascript" src="Ext.check.Gecko4.js"></script>
+		<script type="text/javascript" src="Ext.Element.CSS3Spotlight.js"></script>
+		<script type="text/javascript" src="colorpicker.js"></script>
+		<script type="text/javascript" src="colorpickerfield.js"></script>
+		
+		<style type="text/css">
+			.x-border-layout-ct {
+				background-color: #fff;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			Ext.onReady(function() {
+				Ext.QuickTips.init();
+				var changeSpotlight = function(now) {
+					if (now.el.spotlight) {
+						now.el.CSS3SpotlightHide({
+							duration : vp.westRegion.duration.getValue(),
+							skipAnim : vp.westRegion.skipAnim.getValue(),
+							callback : function () {
+								switch (now.regionCombo.getValue()) {
+									case "North" :
+										vp.northRegion.el.CSS3Spotlight({
+											duration   : vp.westRegion.duration.getValue(),
+											background : vp.westRegion.backgroundColor.getValue(),
+											opacity    : vp.westRegion.opacity.getValue()/100,
+											skipAnim   : vp.westRegion.skipAnim.getValue()
+										});
+										break;
+									case "West" :
+										vp.westRegion.el.CSS3Spotlight({
+											duration   : vp.westRegion.duration.getValue(),
+											background : vp.westRegion.backgroundColor.getValue(),
+											opacity    : vp.westRegion.opacity.getValue()/100,
+											skipAnim   : vp.westRegion.skipAnim.getValue()
+										});
+										break;
+									case "Center" :
+										vp.centerRegion.el.CSS3Spotlight({
+											duration   : vp.westRegion.duration.getValue(),
+											background : vp.westRegion.backgroundColor.getValue(),
+											opacity    : vp.westRegion.opacity.getValue()/100,
+											skipAnim   : vp.westRegion.skipAnim.getValue()
+										});
+										break;
+									case "East" :
+										vp.eastRegion.el.CSS3Spotlight({
+											duration   : vp.westRegion.duration.getValue(),
+											background : vp.westRegion.backgroundColor.getValue(),
+											opacity    : vp.westRegion.opacity.getValue()/100,
+											skipAnim   : vp.westRegion.skipAnim.getValue()
+										});
+										break;
+									case "South" :
+										vp.southRegion.el.CSS3Spotlight({
+											duration   : vp.westRegion.duration.getValue(),
+											background : vp.westRegion.backgroundColor.getValue(),
+											opacity    : vp.westRegion.opacity.getValue()/100,
+											skipAnim   : vp.westRegion.skipAnim.getValue()
+										});
+										break;
+								}
+							}
+						});
+					}
+				}
+				
+				var vp = new Ext.Viewport({
+					layout : "border",
+					defaults : {
+						margins : "5px"
+					},
+					items  : [{
+						region : "north",
+						ref    : "northRegion",
+						frame  : true,
+						height : 200,
+						tbar   : [{
+							text    : "Spotlight Me",
+							handler : function() {
+								vp.northRegion.el.CSS3Spotlight({
+									duration   : vp.westRegion.duration.getValue(),
+									background : vp.westRegion.backgroundColor.getValue(),
+									opacity    : vp.westRegion.opacity.getValue()/100,
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						},{
+							text    : "Stop Spotlighting",
+							handler : function() {
+								vp.northRegion.el.CSS3SpotlightHide({
+									duration : vp.westRegion.duration.getValue(),
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						}],
+						bbar   : [{
+							xtype         : "combo",
+							ref           : "../regionCombo",
+							triggerAction : "all",
+							mode          : "local",
+							store         : new Ext.data.ArrayStore({
+								id     : 0,
+								fields : ["region"],
+								data   : [["North"], ["West"], ["Center"], ["East"], ["South"]]
+							}),
+							valueField    : "region",
+							displayField   : "region"
+						},{
+							text    : "Move Spotlight",
+							handler : function() {
+								changeSpotlight(vp.northRegion);
+							}
+						}]
+					},{
+						region : "west",
+						ref    : "westRegion",
+						frame  : true,
+						width  : 400,
+						layout : "form",
+						items  : [{
+							xtype      : "simplecolorpickerfield",
+							fieldLabel : "Color",
+							name       : "color",
+							value      : "#000000",
+							ref        : "backgroundColor"
+						},{
+							xtype      : "sliderfield",
+							ref        : "opacity",
+							fieldLabel : "Opacity",
+							value      : 50,
+							minValue   : 0,
+							maxValue   : 100,
+							width      : 300,
+							tipText    : function(thumb){
+								return String(thumb.value) + '%';
+							}
+						},{
+							xtype      : "sliderfield",
+							ref        : "duration",
+							fieldLabel : "Duration",
+							value      : 1000,
+							minValue   : 0,
+							maxValue   : 5000,
+							width      : 300,
+							tipText    : function(thumb){
+								return String(thumb.value) + 'ms';
+							}
+						},{
+							xtype      : "checkbox",
+							ref        : "skipAnim",
+							fieldLabel : "Skip Animation",
+							boxLabel   : "Yes"
+						}],
+						tbar   : [{
+							text    : "Spotlight Me",
+							handler : function() {
+								vp.westRegion.el.CSS3Spotlight({
+									duration   : vp.westRegion.duration.getValue(),
+									background : vp.westRegion.backgroundColor.getValue(),
+									opacity    : vp.westRegion.opacity.getValue()/100,
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						},{
+							text    : "Stop Spotlighting",
+							handler : function() {
+								vp.westRegion.el.CSS3SpotlightHide({
+									duration : vp.westRegion.duration.getValue(),
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						}],
+						bbar   : [{
+							xtype         : "combo",
+							ref           : "../regionCombo",
+							triggerAction : "all",
+							mode          : "local",
+							store         : new Ext.data.ArrayStore({
+								id     : 0,
+								fields : ["region"],
+								data   : [["North"], ["West"], ["Center"], ["East"], ["South"]]
+							}),
+							valueField    : "region",
+							displayField   : "region"
+						},{
+							text    : "Move Spotlight",
+							handler : function() {
+								changeSpotlight(vp.westRegion);
+							}
+						}]
+					},{
+						region : "center",
+						ref    : "centerRegion",
+						frame  : true,
+						tbar   : [{
+							text    : "Spotlight Me",
+							handler : function() {
+								vp.centerRegion.el.CSS3Spotlight({
+									duration   : vp.westRegion.duration.getValue(),
+									background : vp.westRegion.backgroundColor.getValue(),
+									opacity    : vp.westRegion.opacity.getValue()/100,
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						},{
+							text    : "Stop Spotlighting",
+							handler : function() {
+								vp.centerRegion.el.CSS3SpotlightHide({
+									duration : vp.westRegion.duration.getValue(),
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						}],
+						bbar   : [{
+							xtype         : "combo",
+							ref           : "../regionCombo",
+							triggerAction : "all",
+							mode          : "local",
+							store         : new Ext.data.ArrayStore({
+								id     : 0,
+								fields : ["region"],
+								data   : [["North"], ["West"], ["Center"], ["East"], ["South"]]
+							}),
+							valueField    : "region",
+							displayField   : "region"
+						},{
+							text    : "Move Spotlight",
+							handler : function() {
+								changeSpotlight(vp.centerRegion);
+							}
+						}]
+					},{
+						region : "east",
+						ref    : "eastRegion",
+						frame  : true,
+						width  : 400,
+						tbar   : [{
+							text    : "Spotlight Me",
+							handler : function() {
+								vp.eastRegion.el.CSS3Spotlight({
+									duration   : vp.westRegion.duration.getValue(),
+									background : vp.westRegion.backgroundColor.getValue(),
+									opacity    : vp.westRegion.opacity.getValue()/100,
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						},{
+							text    : "Stop Spotlighting",
+							handler : function() {
+								vp.eastRegion.el.CSS3SpotlightHide({
+									duration : vp.westRegion.duration.getValue(),
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						}],
+						bbar   : [{
+							xtype         : "combo",
+							ref           : "../regionCombo",
+							triggerAction : "all",
+							mode          : "local",
+							store         : new Ext.data.ArrayStore({
+								id     : 0,
+								fields : ["region"],
+								data   : [["North"], ["West"], ["Center"], ["East"], ["South"]]
+							}),
+							valueField    : "region",
+							displayField   : "region"
+						},{
+							text    : "Move Spotlight",
+							handler : function() {
+								changeSpotlight(vp.eastRegion);
+							}
+						}]
+					},{
+						region : "south",
+						ref    : "southRegion",
+						frame  : true,
+						height : 200,
+						tbar   : [{
+							text    : "Spotlight Me",
+							handler : function() {
+								vp.southRegion.el.CSS3Spotlight({
+									duration   : vp.westRegion.duration.getValue(),
+									background : vp.westRegion.backgroundColor.getValue(),
+									opacity    : vp.westRegion.opacity.getValue()/100,
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						},{
+							text    : "Stop Spotlighting",
+							handler : function() {
+								vp.southRegion.el.CSS3SpotlightHide({
+									duration : vp.westRegion.duration.getValue(),
+									skipAnim   : vp.westRegion.skipAnim.getValue()
+								});
+							}
+						}],
+						bbar   : [{
+							xtype         : "combo",
+							ref           : "../regionCombo",
+							triggerAction : "all",
+							mode          : "local",
+							store         : new Ext.data.ArrayStore({
+								id     : 0,
+								fields : ["region"],
+								data   : [["North"], ["West"], ["Center"], ["East"], ["South"]]
+							}),
+							valueField    : "region",
+							displayField   : "region"
+						},{
+							text    : "Move Spotlight",
+							handler : function() {
+								changeSpotlight(vp.southRegion);
+							}
+						}]
+					}]
+				});
+			});
+		</script>
+    </head>
+    <body>
+    </body>
+</html>
